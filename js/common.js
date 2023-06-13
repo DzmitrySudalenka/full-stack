@@ -157,6 +157,55 @@ let common = {
             html('table', result.html);
         });
     },
+    
+    // users
+    
+    user_edit_window: (user_id, e) => {
+        // actions
+        cancel_event(e);
+        common.menu_popup_hide_all('all');
+        // vars
+        let data = {user_id: user_id};
+        let location = {dpt: 'user', act: 'edit_window'};
+        // call
+        request({location: location, data: data}, (result) => {
+            common.modal_show(400, result.html);
+        });
+    },
+    
+    user_edit_update: (user_id = 0) => {
+        // vars
+        let data = {
+            user_id: user_id,
+            first_name: gv('firstName'),
+            last_name: gv('lastName'),
+            phone: gv('phone'),
+            email: gv('email'),
+            plots: gv('plots'),
+            offset: global.offset
+        };
+        let location = {dpt: 'user', act: 'edit_update'};
+        // call
+        request({location: location, data: data}, (result) => {
+            common.modal_hide();
+            html('table', result.html);
+        });
+    },
+    
+    user_delete: (user_id) => {
+        // vars
+        let data = {
+            user_id: user_id,
+            offset: global.offset
+        };
+        let location = {dpt: 'user', act: 'delete'};
+        // call
+        request({location: location, data: data}, (result) => {
+            common.modal_hide();
+            html('table', result.html);
+        });
+    },
+    
 }
 
 add_event(document, 'DOMContentLoaded', common.init);
